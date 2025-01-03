@@ -27,47 +27,56 @@ Antes de rodar o projeto, você precisa ter as seguintes ferramentas instaladas:
 1 - Node.js (versão 14 ou superior)
 Você pode verificar se já tem o Node.js instalado executando o comando:
 
+
 node -v
+
 
 Caso não tenha, instale o Node.js aqui.
 
 2 - NPM (gerenciador de pacotes do Node.js)
 O NPM é instalado automaticamente com o Node.js. Verifique se você o tem:
 
+
 npm -v
+
 
 -Configuração e Execução
 
 1. Clonando o repositório
 Clone o repositório do projeto utilizando o Git:
 
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
-
+git clone https://github.com/seu-usuario/brain-agriculture.git
 2. Instalando as dependências
 Após clonar o repositório, navegue até a pasta do projeto e instale as dependências:
+
 
 cd brain-agriculture
 npm install
 
+
 3. Rodando o Projeto Localmente
 Para iniciar a aplicação em modo de desenvolvimento, use o seguinte comando:
 
+
 npm start
+
 
 4. Rodando os Testes
 Para rodar os testes automatizados da aplicação, utilize o comando:
 
+
 npm test
+
 
 📦 Dependências
 Aqui estão as dependências de desenvolvimento utilizadas no projeto:
 
-ts-jest: Para configurar o Jest com TypeScript.
-@testing-library/react: Para testar componentes React.
-@testing-library/jest-dom: Para utilizar as asserções adicionais no Jest.
-jest: Framework de testes.
-redux-mock-store: Para criar um mock do Redux em testes.
-react-router-dom: Para navegação entre páginas.
+- ts-jest: Para configurar o Jest com TypeScript.
+- @testing-library/react: Para testar componentes React.
+- @testing-library/jest-dom: Para utilizar as asserções adicionais no Jest.
+- jest: Framework de testes.
+- redux-mock-store: Para criar um mock do Redux em testes.
+- react-router-dom: Para navegação entre páginas.
 
 - Dificuldades com o teste
 
