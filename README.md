@@ -31,7 +31,6 @@ Você pode verificar se já tem o Node.js instalado executando o comando:
 node -v
 
 
-Caso não tenha, instale o Node.js aqui.
 
 2 - NPM (gerenciador de pacotes do Node.js)
 O NPM é instalado automaticamente com o Node.js. Verifique se você o tem:
@@ -45,20 +44,29 @@ npm -v
 1. Clonando o repositório
 Clone o repositório do projeto utilizando o Git:
 
+
+
 git clone https://github.com/seu-usuario/brain-agriculture.git
+
+
 2. Instalando as dependências
 Após clonar o repositório, navegue até a pasta do projeto e instale as dependências:
 
 
+
 cd brain-agriculture
+
 npm install
+
 
 
 3. Rodando o Projeto Localmente
 Para iniciar a aplicação em modo de desenvolvimento, use o seguinte comando:
 
 
+
 npm start
+
 
 
 4. Rodando os Testes
