@@ -42,6 +42,8 @@ npm -v
 -Configuração e Execução
 
 1. Clonando o repositório
+
+
 Clone o repositório do projeto utilizando o Git:
 
 
@@ -50,6 +52,8 @@ git clone https://github.com/seu-usuario/brain-agriculture.git
 
 
 2. Instalando as dependências
+
+
 Após clonar o repositório, navegue até a pasta do projeto e instale as dependências:
 
 
@@ -61,6 +65,8 @@ npm install
 
 
 3. Rodando o Projeto Localmente
+
+
 Para iniciar a aplicação em modo de desenvolvimento, use o seguinte comando:
 
 
@@ -70,6 +76,8 @@ npm start
 
 
 4. Rodando os Testes
+
+
 Para rodar os testes automatizados da aplicação, utilize o comando:
 
 
