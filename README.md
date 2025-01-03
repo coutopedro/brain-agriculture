@@ -39,9 +39,9 @@ O NPM é instalado automaticamente com o Node.js. Verifique se você o tem:
 npm -v
 
 
--Configuração e Execução
+Configuração e Execução
 
-1. Clonando o repositório
+( Clonando o repositório )
 
 
 Clone o repositório do projeto utilizando o Git:
@@ -51,7 +51,7 @@ Clone o repositório do projeto utilizando o Git:
 git clone https://github.com/seu-usuario/brain-agriculture.git
 
 
-2. Instalando as dependências
+( Instalando as dependências )
 
 
 Após clonar o repositório, navegue até a pasta do projeto e instale as dependências:
@@ -64,7 +64,7 @@ npm install
 
 
 
-3. Rodando o Projeto Localmente
+( Rodando o Projeto Localmente )
 
 
 Para iniciar a aplicação em modo de desenvolvimento, use o seguinte comando:
@@ -75,7 +75,7 @@ npm start
 
 
 
-4. Rodando os Testes
+( Rodando os Testes )
 
 
 Para rodar os testes automatizados da aplicação, utilize o comando:
@@ -94,19 +94,18 @@ Aqui estão as dependências de desenvolvimento utilizadas no projeto:
 - redux-mock-store: Para criar um mock do Redux em testes.
 - react-router-dom: Para navegação entre páginas.
 
-- Dificuldades com o teste
+( Dificuldades com o teste )
 
 Validação de CPF 
-- Desafio: Implementar a validação correta de CPF foi bem trabalhoso devido à complexidade das regras de validação e verificação de formato.
-- Gerenciamento de Estado com Redux
+Desafio: Implementar a validação correta de CPF foi bem trabalhoso devido à complexidade das regras de validação e verificação de formato.
+Gerenciamento de Estado com Redux
   
 Desafio: Manter o estado da aplicação de forma eficiente, os dados complexos, como produtores rurais, áreas, safra e culturas. 
 Solução: Seguir boas práticas de Redux, como usar slices de estado bem definidos. 
 
 
-- Agradecimentos
-Gostaria de expressar minha sincera gratidão pela oportunidade de realizar este teste. Embora eu tenha experiência com algumas das tecnologias utilizadas, outras foram novas para mim, e esse desafio foi uma excelente oportunidade de aprender e aplicar novos conhecimentos.
+( Agradecimentos)
 
-Agradeço pela confiança e pela chance de demonstrar minhas habilidades. Estou empolgado com o que aprendi durante o processo e ansioso para continuar evoluindo na minha jornada.
+Gostaria de expressar minha sincera gratidão pela oportunidade de realizar este teste. Embora eu tenha experiência com algumas das tecnologias utilizadas, outras foram novas para mim, e esse desafio foi uma excelente oportunidade de aprender e aplicar novos conhecimentos. Agradeço pela confiança e pela chance de demonstrar minhas habilidades. Estou empolgado com o que aprendi durante o processo e ansioso para continuar evoluindo na minha jornada.
 
 
