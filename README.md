@@ -1,46 +1,111 @@
-# Getting Started with Create React App
+# 🏞 **Projeto de Cadastro de Produtores Rurais**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto é uma aplicação construída para gerenciar o cadastro de produtores rurais, incluindo validação de CPF, gerenciamento de área, safra e culturas plantadas. Ele foi desenvolvido utilizando **TypeScript**, **ReactJS** e **Redux** para garantir uma boa experiência de desenvolvimento e qualidade de código.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔧 **Tecnologias Utilizadas**
 
-### `npm start`
+Abaixo estão as principais tecnologias utilizadas para o desenvolvimento do projeto:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **ReactJS**: Framework JavaScript para construção da interface de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Redux**: Gerenciamento de estado global da aplicação.
+- **React Router**: Navegação entre diferentes páginas da aplicação.
+- **Jest**: Framework de testes.
+- **React Testing Library**: Biblioteca de testes para componentes React.
+- **Styled Components**: Biblioteca para estilização de componentes React utilizando CSS-in-JS.
+- **ts-jest**: Pré-processador TypeScript para o Jest.
+- **@testing-library/jest-dom**: Extensões do Jest para facilitar as asserções em testes de DOM.
+- **Recharts**: Biblioteca de gráficos para exibição de dados na interface.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## 📋 **Pré-requisitos**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Antes de rodar o projeto, você precisa ter as seguintes ferramentas instaladas:
 
-### `npm run build`
+1 - Node.js (versão 14 ou superior)
+Você pode verificar se já tem o Node.js instalado executando o comando:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+node -v
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2 - NPM (gerenciador de pacotes do Node.js)
+O NPM é instalado automaticamente com o Node.js. Verifique se você o tem:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+npm -v
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+Configuração e Execução
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1️⃣ Clonando o Repositório
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+Clone o repositório do projeto utilizando o Git:
+
+
+
+git clone https://github.com/seu-usuario/brain-agriculture.git
+
+
+2️⃣ Instalando as Dependências
+
+
+Após clonar o repositório, navegue até a pasta do projeto e instale as dependências:
+
+
+
+cd brain-agriculture
+
+npm install
+
+
+
+3️⃣ Rodando o Projeto Localmente
+
+
+Para iniciar a aplicação em modo de desenvolvimento, use o seguinte comando:
+
+
+
+npm start
+
+
+
+4️⃣ Rodando os Testes Automatizados
+
+
+Para rodar os testes automatizados da aplicação, utilize o comando:
+
+
+npm test
+
+
+📦 Dependências
+Aqui estão as dependências de desenvolvimento utilizadas no projeto:
+
+- ts-jest: Para configurar o Jest com TypeScript.
+- @testing-library/react: Para testar componentes React.
+- @testing-library/jest-dom: Para utilizar as asserções adicionais no Jest.
+- jest: Framework de testes.
+- redux-mock-store: Para criar um mock do Redux em testes.
+- react-router-dom: Para navegação entre páginas.
+
+( Dificuldades com o teste )
+
+Validação de CPF 
+Desafio: Implementar a validação correta de CPF foi bem trabalhoso devido à complexidade das regras de validação e verificação de formato.
+Gerenciamento de Estado com Redux
+  
+Desafio: Manter o estado da aplicação de forma eficiente, os dados complexos, como produtores rurais, áreas, safra e culturas. 
+Solução: Seguir boas práticas de Redux, como usar slices de estado bem definidos. 
+
+
+( Agradecimentos)
+
+Gostaria de expressar minha sincera gratidão pela oportunidade de realizar este teste. Embora eu tenha experiência com algumas das tecnologias utilizadas, outras foram novas para mim, e esse desafio foi uma excelente oportunidade de aprender e aplicar novos conhecimentos. Agradeço pela confiança e pela chance de demonstrar minhas habilidades. Estou empolgado com o que aprendi durante o processo e ansioso para continuar evoluindo na minha jornada.
+
+
