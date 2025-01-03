@@ -5,7 +5,6 @@ import { editProducer } from '../store/features/producerSlice';
 import { RootState } from '../store/store';
 import styled from 'styled-components';
 
-// Certifique-se de que o tipo `Producer` seja o correto
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,20 +14,19 @@ const AppContainer = styled.div`
 
 const FormWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: space-between;
   padding: 20px;
-  gap: 40px;
-  flex-wrap: wrap;
+  gap: 20px; /* Espaçamento entre as colunas */
   max-width: 1200px;
   margin: 0 auto;
   flex: 1;
 `;
 
 const FormColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Espaçamento entre os campos dentro de cada coluna */
   flex: 1;
-  min-width: 300px;
-  padding-right: 20px;
 `;
 
 const InputField = styled.div`
@@ -76,9 +74,6 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-// Adicione a tipagem explícita para os parâmetros no mapeamento
-
-// Importe ou defina os tipos no topo do arquivo
 interface Crop {
     crop: string;
     year: string;
@@ -182,8 +177,8 @@ const ProducerEdit = () => {
                 name: producerFromState.name,
                 properties: producerFromState.properties.map((property: Property) => ({
                     ...property,
-                    harvests: property.harvests || [],  // Garantir que seja um array
-                    crops: property.crops || [],  // Garantir que seja um array
+                    harvests: property.harvests || [],
+                    crops: property.crops || [],
                 }))
             });
         }
@@ -192,14 +187,13 @@ const ProducerEdit = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Corrige o mapeamento de `harvests` e `crops`
         const updatedProperties = producer.properties.map((property: Property) => ({
             ...property,
-            harvests: property.harvests.map((item) => item.trim()), // Apenas removendo espaços extras
+            harvests: property.harvests.map((item) => item.trim()),
             crops: property.crops.map((item) => {
-                const crop = item.crop.trim();  // Usa 'crop' de 'Crop'
-                const year = item.year.trim();  // Usa 'year' de 'Crop'
-                return { crop, year };  // Cria um array de objetos { crop, year }
+                const crop = item.crop.trim();
+                const year = item.year.trim();
+                return { crop, year };
             })
         }));
 
@@ -209,7 +203,6 @@ const ProducerEdit = () => {
             properties: updatedProperties,
         };
 
-        // Envia o produtor atualizado
         dispatch(editProducer(updatedProducer));
         navigate('/');
     };
@@ -217,110 +210,86 @@ const ProducerEdit = () => {
     if (!producerFromState) {
         return <p>Produtor não encontrado!</p>;
     }
-
     return (
         <AppContainer>
             <form onSubmit={handleSubmit}>
                 <FormWrapper>
-                    {producer.properties.map((property: Property, index: number) => (  // Adicionando os tipos aqui
-                        <div key={index}>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Nome da Fazenda:</label>
-                                    <input
-                                        type="text"
-                                        name="farmName"
-                                        value={property.farmName}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Cidade:</label>
-                                    <input
-                                        type="text"
-                                        name="city"
-                                        value={property.city}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Estado:</label>
-                                    <input
-                                        type="text"
-                                        name="state"
-                                        value={property.state}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Área Total:</label>
-                                    <input
-                                        type="number"
-                                        name="totalArea"
-                                        value={property.totalArea}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Área Agricultável:</label>
-                                    <input
-                                        type="number"
-                                        name="farmableArea"
-                                        value={property.farmableArea}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Área de Vegetação:</label>
-                                    <input
-                                        type="number"
-                                        name="vegetationArea"
-                                        value={property.vegetationArea}
-                                        onChange={(e) => handlePropertyChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Safras:</label>
-                                    <input
-                                        type="text"
-                                        name="harvests"
-                                        value={property.harvests.join(', ')}  // Exibe como string para o usuário
-                                        onChange={(e) => handleHarvestsChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <FormColumn>
-                                <InputField>
-                                    <label>Culturas:</label>
-                                    <input
-                                        type="text"
-                                        name="crops"
-                                        value={property.crops.map((crop: Crop) => `${crop.crop} na ${crop.year}`).join(', ')}  // Exibe como string para o usuário
-                                        onChange={(e) => handleCropsChange(index, e)}
-                                    />
-                                </InputField>
-                            </FormColumn>
-                            <ButtonWrapper>
-                                <button type="button" onClick={() => removeProperty(index)}>Remover Propriedade</button>
-                            </ButtonWrapper>
-                        </div>
-                    ))}
-
-                    <ButtonWrapper>
-                        <button type="button" onClick={addProperty}>Adicionar Propriedade</button>
-                    </ButtonWrapper>
+                    <FormColumn>
+                        <InputField>
+                            <label>Nome da Fazenda:</label>
+                            <input
+                                type="text"
+                                name="farmName"
+                                value={producer.properties[0]?.farmName || ''}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Cidade:</label>
+                            <input
+                                type="text"
+                                name="city"
+                                value={producer.properties[0]?.city || ''}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Estado:</label>
+                            <input
+                                type="text"
+                                name="state"
+                                value={producer.properties[0]?.state || ''}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Área Total:</label>
+                            <input
+                                type="number"
+                                name="totalArea"
+                                value={producer.properties[0]?.totalArea || 0}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                    </FormColumn>
+                    <FormColumn>
+                        <InputField>
+                            <label>Área Agricultável:</label>
+                            <input
+                                type="number"
+                                name="farmableArea"
+                                value={producer.properties[0]?.farmableArea || 0}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Área de Vegetação:</label>
+                            <input
+                                type="number"
+                                name="vegetationArea"
+                                value={producer.properties[0]?.vegetationArea || 0}
+                                onChange={(e) => handlePropertyChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Safras:</label>
+                            <input
+                                type="text"
+                                name="harvests"
+                                value={producer.properties[0]?.harvests.join(', ') || ''}
+                                onChange={(e) => handleHarvestsChange(0, e)}
+                            />
+                        </InputField>
+                        <InputField>
+                            <label>Culturas:</label>
+                            <input
+                                type="text"
+                                name="crops"
+                                value={producer.properties[0]?.crops.map((crop: Crop) => `${crop.crop} na ${crop.year}`).join(', ') || ''}
+                                onChange={(e) => handleCropsChange(0, e)}
+                            />
+                        </InputField>
+                    </FormColumn>
                 </FormWrapper>
 
                 <ButtonWrapper>
@@ -330,6 +299,5 @@ const ProducerEdit = () => {
         </AppContainer>
     );
 };
-
 
 export default ProducerEdit;

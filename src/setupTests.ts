@@ -1,5 +1,12 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
+import React from 'react';
 import '@testing-library/jest-dom';
+
+jest.mock('react-router-dom', () => ({
+    BrowserRouter: ({ children }: { children: React.ReactNode }) =>
+        React.createElement('div', null, children),
+    Routes: ({ children }: { children: React.ReactNode }) =>
+        React.createElement('div', null, children),
+    Route: () => React.createElement('div', null),
+    Link: ({ children }: { children: React.ReactNode }) =>
+        React.createElement('span', null, children),
+}));

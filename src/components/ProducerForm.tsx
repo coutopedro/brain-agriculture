@@ -39,12 +39,18 @@ const AppContainer = styled.div`
 
 const FormContainer = styled.div`
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+`;
+
+const GridForm = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 `;
 
 const InputField = styled.div`
@@ -85,22 +91,21 @@ const ErrorMessage = styled.div`
 const SubmitButton = styled.button`
   background-color: #00524F;
   color: #fff;
-  padding: 12px 20px;
+  padding: 12px 24px;  // Aumentei o padding para tornar o botão maior
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 16px;  // Aumentei o tamanho da fonte
   cursor: pointer;
-  width: 100%;
-  
+  display: block;  // Garante que o botão seja tratado como um bloco
+  width: fit-content;  // O botão vai ajustar sua largura ao conteúdo
+  margin: 20px auto;  // Centraliza o botão com margem superior e inferior
+
   &:hover {
-    background-color: #003c3a;
+    background-color: rgb(0, 179, 30);
   }
 `;
 
-// Função de validação de CPF
 function validateCPF(cpf: string): boolean {
-  // Implementação simples para validar se o CPF tem 11 caracteres.
-  // Ajuste a lógica conforme necessário
   return cpf.length === 11;
 }
 
@@ -117,7 +122,7 @@ const ProducerForm = () => {
       farmableArea: 0,
       vegetationArea: 0,
       harvests: [],
-      crops: [],
+      crops: [{ crop: '', year: '' }],
     }],
   });
 
@@ -158,19 +163,18 @@ const ProducerForm = () => {
 
     setCpfError('');
 
+    const { totalArea, farmableArea, vegetationArea } = producer.properties[0];
+
+    // Validação de áreas no envio
+    if (farmableArea + vegetationArea > totalArea) {
+      alert('ATENÇÃO! A soma da área agricultável e da área de vegetação não pode ser maior que a área total da fazenda.');
+      return; // Impede o envio do formulário se a condição não for atendida
+    }
+
     const updatedProducer = {
       cpf: producer.cpf,
       name: producer.name,
-      properties: [{
-        farmName: producer.properties[0].farmName,
-        city: producer.properties[0].city,
-        state: producer.properties[0].state,
-        totalArea: producer.properties[0].totalArea,
-        farmableArea: producer.properties[0].farmableArea,
-        vegetationArea: producer.properties[0].vegetationArea,
-        harvests: producer.properties[0].harvests,
-        crops: producer.properties[0].crops,
-      }],
+      properties: [producer.properties[0]],  // Atualiza as propriedades
     };
 
     if (cpf) {
@@ -184,11 +188,63 @@ const ProducerForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // Verifique se o campo é numérico (totalArea, farmableArea ou vegetationArea)
+    const isNumericField = name === "totalArea" || name === "farmableArea" || name === "vegetationArea";
+
+    let newValue: string | number = value; // Permitir tanto string quanto número
+
+    // Se for numérico e não vazio, converta para número
+    if (isNumericField) {
+      newValue = value === "" ? "" : Number(value);
+    }
+
+    // Atualiza o estado
+    setProducer((prevState) => {
+      const updatedProducer = {
+        ...prevState,
+        properties: [{
+          ...prevState.properties[0],
+          [name]: newValue,  // Atualiza o valor
+        }],
+      };
+
+      // Se o campo alterado for uma área, faça a verificação
+      if (name === "totalArea" || name === "farmableArea" || name === "vegetationArea") {
+        const { totalArea, farmableArea, vegetationArea } = updatedProducer.properties[0];
+
+        // Verifique se a soma das áreas não ultrapassa a área total
+        if (farmableArea + vegetationArea > totalArea) {
+          alert('A soma da área agricultável e da área de vegetação não pode ser maior que a área total da fazenda.');
+          return prevState; // Não atualiza o estado caso a soma ultrapasse
+        }
+      }
+
+      return updatedProducer;  // Atualiza o estado caso a validação passe
+    });
+  };
+
+  // Atualização da função de cultivo e safra:
+  const handleCropChange = (e: React.ChangeEvent<HTMLInputElement>, index: number, field: string) => {
+    const { value } = e.target;
+
     setProducer((prevState) => ({
       ...prevState,
       properties: [{
         ...prevState.properties[0],
-        [name]: value,
+        crops: prevState.properties[0].crops.map((crop, i) =>
+          i === index ? { ...crop, [field]: value } : crop
+        ),
+      }],
+    }));
+  };
+
+  const addCrop = () => {
+    setProducer((prevState) => ({
+      ...prevState,
+      properties: [{
+        ...prevState.properties[0],
+        crops: [...prevState.properties[0].crops, { crop: '', year: '' }], // Adiciona um novo objeto de safra e cultivo vazio
       }],
     }));
   };
@@ -197,87 +253,115 @@ const ProducerForm = () => {
     <AppContainer>
       <FormContainer>
         <form onSubmit={handleSubmit}>
-          <InputField>
-            <label>Nome:</label>
-            <input
-              type="text"
-              name="name"
-              value={producer.name}
-              onChange={(e) => setProducer({ ...producer, name: e.target.value })}
-            />
-          </InputField>
+          <GridForm>
+            <InputField>
+              <label>Nome:</label>
+              <input
+                type="text"
+                name="name"
+                value={producer.name}
+                onChange={(e) => setProducer({ ...producer, name: e.target.value })}
+              />
+            </InputField>
 
-          <InputField>
-            <label>CPF:</label>
-            <input
-              type="text"
-              name="cpf"
-              value={producer.cpf}
-              onChange={(e) => setProducer({ ...producer, cpf: e.target.value })}
-            />
-            {cpfError && <ErrorMessage>{cpfError}</ErrorMessage>}
-          </InputField>
+            <InputField>
+              <label>CPF:</label>
+              <input
+                type="text"
+                name="cpf"
+                value={producer.cpf}
+                onChange={(e) => setProducer({ ...producer, cpf: e.target.value })}
+              />
+              {cpfError && <ErrorMessage>{cpfError}</ErrorMessage>}
+            </InputField>
 
-          <InputField>
-            <label>Nome da Fazenda:</label>
-            <input
-              type="text"
-              name="farmName"
-              value={producer.properties[0].farmName}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], farmName: e.target.value }] })}
-            />
-          </InputField>
+            <InputField>
+              <label>Nome da Fazenda:</label>
+              <input
+                type="text"
+                name="farmName"
+                value={producer.properties[0].farmName}
+                onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], farmName: e.target.value }] })}
+              />
+            </InputField>
 
-          <InputField>
-            <label>Cidade:</label>
-            <input
-              type="text"
-              name="city"
-              value={producer.properties[0].city}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], city: e.target.value }] })}
-            />
-          </InputField>
+            <InputField>
+              <label>Cidade:</label>
+              <input
+                type="text"
+                name="city"
+                value={producer.properties[0].city}
+                onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], city: e.target.value }] })}
+              />
+            </InputField>
+            <InputField>
+              <label>Safra:</label>
+              {producer.properties[0].crops.map((crop, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    name="year"
+                    value={crop.year}
+                    onChange={(e) => handleCropChange(e, index, 'year')}
+                  />
+                </div>
+              ))}
+              <button type="button" onClick={addCrop}>Adicionar Safra</button>
+            </InputField>
 
-          <InputField>
-            <label>Estado:</label>
-            <input
-              type="text"
-              name="state"
-              value={producer.properties[0].state}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], state: e.target.value }] })}
-            />
-          </InputField>
+            <InputField>
+              <label>Estado:</label>
+              <input
+                type="text"
+                name="state"
+                value={producer.properties[0].state}
+                onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], state: e.target.value }] })}
+              />
+            </InputField>
 
-          <InputField>
-            <label>Área Total:</label>
-            <input
-              type="number"
-              name="totalArea"
-              value={producer.properties[0].totalArea}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], totalArea: Number(e.target.value) }] })}
-            />
-          </InputField>
+            <InputField>
+              <label>Cultivo:</label>
+              {producer.properties[0].crops.map((crop, index) => (
+                <div key={index}>
+                  <input
+                    type="text"
+                    name="crop"
+                    value={crop.crop}
+                    onChange={(e) => handleCropChange(e, index, 'crop')}
+                  />
+                </div>
+              ))}
+              <button type="button" onClick={addCrop}>Adicionar Cultivo</button>
+            </InputField>
+            <InputField>
+              <label>Área Total:</label>
+              <input
+                type="number"
+                name="totalArea"
+                value={producer.properties[0].totalArea || ''}  // Permite valor vazio
+                onChange={handleChange}
+              />
+            </InputField>
+            <InputField>
+              <label>Área Agricultável:</label>
+              <input
+                type="number"
+                name="farmableArea"
+                value={producer.properties[0].farmableArea || ''}  // Permite valor vazio
+                onChange={handleChange}
+              />
+            </InputField>
 
-          <InputField>
-            <label>Área Agricultável:</label>
-            <input
-              type="number"
-              name="farmableArea"
-              value={producer.properties[0].farmableArea}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], farmableArea: Number(e.target.value) }] })}
-            />
-          </InputField>
-
-          <InputField>
-            <label>Área de Vegetação:</label>
-            <input
-              type="number"
-              name="vegetationArea"
-              value={producer.properties[0].vegetationArea}
-              onChange={(e) => setProducer({ ...producer, properties: [{ ...producer.properties[0], vegetationArea: Number(e.target.value) }] })}
-            />
-          </InputField>
-
+            <InputField>
+              <label>Área de Vegetação:</label>
+              <input
+                type="number"
+                name="vegetationArea"
+                value={producer.properties[0].vegetationArea || ''}  // Permite valor vazio
+                onChange={handleChange}
+              />
+            </InputField>
+          </GridForm>
           <SubmitButton type="submit">Salvar</SubmitButton>
         </form>
       </FormContainer>
