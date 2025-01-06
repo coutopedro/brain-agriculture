@@ -91,14 +91,14 @@ const ErrorMessage = styled.div`
 const SubmitButton = styled.button`
   background-color: #00524F;
   color: #fff;
-  padding: 12px 24px;  // Aumentei o padding para tornar o botão maior
+  padding: 12px 24px;  
   border: none;
   border-radius: 4px;
-  font-size: 16px;  // Aumentei o tamanho da fonte
+  font-size: 16px;  
   cursor: pointer;
-  display: block;  // Garante que o botão seja tratado como um bloco
-  width: fit-content;  // O botão vai ajustar sua largura ao conteúdo
-  margin: 20px auto;  // Centraliza o botão com margem superior e inferior
+  display: block;  
+  width: fit-content;  
+  margin: 20px auto;  
 
   &:hover {
     background-color: rgb(0, 179, 30);
@@ -189,7 +189,7 @@ const ProducerForm = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // Verifique se o campo é numérico (totalArea, farmableArea ou vegetationArea)
+    // Verifica se o campo é numérico (totalArea, farmableArea ou vegetationArea)
     const isNumericField = name === "totalArea" || name === "farmableArea" || name === "vegetationArea";
 
     let newValue: string | number = value; // Permitir tanto string quanto número

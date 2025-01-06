@@ -20,7 +20,7 @@ const ListContainer = styled.div`
   align-items: center;
 `;
 
-// Estilo dos cartões de cada produtor
+// Estilo dos cards de cada produtor
 const ProducerCard = styled.div`
   background: #ffffff;
   padding: 20px;

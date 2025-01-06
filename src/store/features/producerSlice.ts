@@ -9,7 +9,7 @@ interface Property {
   farmableArea: number;
   vegetationArea: number;
   harvests: string[];
-  crops: { crop: string; year: string }[];  // Certifique-se de que crops está correto
+  crops: { crop: string; year: string }[];  
 }
 
 export interface Producer {
@@ -23,15 +23,15 @@ interface ProducerState {
   producers: Producer[];  // Lista de todos os produtores
 }
 
-// Aqui você define o estado inicial do slice
+// estado inicial do slice
 const initialState: ProducerState = {
-  producers: [],  // Inicialmente não temos produtores, é um array vazio
+  producers: [], 
 };
 
 // Cria a slice do Redux para os produtores
 const producerSlice = createSlice({
-  name: 'producers',  // Nome da slice
-  initialState,  // O estado inicial que você acabou de definir
+  name: 'producers',  
+  initialState,  // O estado inicial 
   reducers: {
     addProducer: (state, action: PayloadAction<Producer>) => {
       state.producers.push(action.payload);  // Adiciona um novo produtor ao array

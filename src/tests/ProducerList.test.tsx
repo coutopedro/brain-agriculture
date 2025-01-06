@@ -53,7 +53,7 @@ describe('ProducerList', () => {
             </Provider>
         );
 
-        // Verifica se os nomes dos produtores aparecem na tela
+        // Verifica se os nomes dos produtores 
         expect(screen.getByText('Produtor 1')).toBeInTheDocument();
         expect(screen.getByText('Produtor 2')).toBeInTheDocument();
     });

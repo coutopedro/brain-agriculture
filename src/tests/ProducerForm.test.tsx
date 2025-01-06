@@ -1,10 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { store } from '../store/store'; // Certifique-se de que a store está configurada corretamente
+import { store } from '../store/store'; 
 import ProducerForm from '../components/ProducerForm';
 
-// Função de utilitário para renderizar o componente com o Redux Provider
+// Função para renderizar o componente com o Redux Provider
 const renderWithStore = (ui: React.ReactElement) => {
     return render(
         <Provider store={store}>

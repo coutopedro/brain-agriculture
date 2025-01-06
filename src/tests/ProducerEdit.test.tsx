@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { store } from '../store/store'; // Ajuste o caminho conforme sua estrutura de pastas
-import ProducerEdit from '../components/ProducerEdit'; // Ajuste o caminho conforme sua estrutura de pastas
-import { editProducer } from '../store/features/producerSlice'; // Ajuste o caminho conforme sua estrutura de pastas
+import { store } from '../store/store'; 
+import ProducerEdit from '../components/ProducerEdit'; 
+import { editProducer } from '../store/features/producerSlice'; 
 
 jest.mock('../store/features/producerSlice', () => ({
     ...jest.requireActual('../store/features/producerSlice'),
@@ -12,7 +12,7 @@ jest.mock('../store/features/producerSlice', () => ({
 
 describe('ProducerEdit Component', () => {
     it('should render the producer edit form', async () => {
-        // Simule os dados de um produtor
+        
         const mockProducer = {
             cpf: '12345678901',
             name: 'Produtor Teste',
@@ -84,7 +84,7 @@ describe('ProducerEdit Component', () => {
         await waitFor(() => {
             expect(mockDispatch).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    type: editProducer.type, // Não é necessário chamar como função, pois 'type' é uma constante
+                    type: editProducer.type, 
                     payload: {
                         cpf: '12345678901', // O CPF deve ser mantido
                         name: 'Produtor Teste', // Nome do produtor
@@ -116,7 +116,7 @@ describe('ProducerEdit Component', () => {
             </Provider>
         );
 
-        // A mensagem de erro deve ser exibida se o produtor não for encontrado
+        // A mensagem de erro 
         expect(screen.getByText(/Produtor não encontrado!/)).toBeInTheDocument();
     });
 });
