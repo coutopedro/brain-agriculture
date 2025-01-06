@@ -152,11 +152,11 @@ const ProducerList = () => {
       {producers.length === 0 ? (
         <p>Não há produtores cadastrados.</p>
       ) : (
-        producers.map((producer) => (
+        producers.map((producer) => ( // Mapeia a lista de produtores para exibir cada um como um cartão
           <ProducerCard key={producer.cpf}>
             <ProducerDetails>
               <h3>{producer.name}</h3>
-              {producer.properties &&
+              {producer.properties && //Verifica se o produtor possui propriedades cadastradas
                 producer.properties.map((property) => (
                   <div key={property.farmName}>
                     <p><strong>Fazenda:</strong> {property.farmName}</p>
@@ -172,11 +172,13 @@ const ProducerList = () => {
               <EditButton to={`/edit/${producer.cpf}`}>Editar</EditButton>
               <DeleteButton onClick={() => handleDelete(producer.cpf)}>Excluir</DeleteButton>
               <ActionButton onClick={() => toggleChart(producer.cpf)}>
-                {showChart === producer.cpf ? 'Ocultar Gráfico' : 'Mostrar Gráfico'}
+                {/* Exibe o gráfico em forma de pizza quando o gráfico está ativo para o produtor */}
+                {showChart === producer.cpf ? 'Ocultar Gráfico' : 'Mostrar Gráfico'} 
               </ActionButton>
             </ButtonGroup>
             {showChart === producer.cpf && (
               <PieChart width={300} height={300}>
+                {/* Configuração do gráfico de pizza com os dados das culturas */}
                 <Pie
                   data={producer.properties.flatMap((property) =>
                     property.crops.map((crop) => ({ name: crop.crop, value: 1 }))
