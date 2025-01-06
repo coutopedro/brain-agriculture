@@ -1,3 +1,4 @@
+// Importação de bibliotecas necessárias do React, Redux e Styled-Components
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { editProducer } from '../store/features/producerSlice';
 import { RootState } from '../store/store';
 import styled from 'styled-components';
 
+// Estilo do contêiner principal da aplicação
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,6 +14,7 @@ const AppContainer = styled.div`
   padding-top: 80px;
 `;
 
+// Estilo do contêiner que envolve o formulário
 const FormWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -22,6 +25,7 @@ const FormWrapper = styled.div`
   flex: 1;
 `;
 
+// Estilo das colunas do formulário
 const FormColumn = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,6 +33,7 @@ const FormColumn = styled.div`
   flex: 1;
 `;
 
+// Estilo dos campos de entrada e rótulos do formulário
 const InputField = styled.div`
   margin-bottom: 20px;
 
@@ -53,6 +58,7 @@ const InputField = styled.div`
   }
 `;
 
+// Estilo do contêiner para os botões
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -74,11 +80,13 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+// Interface para representar uma cultura plantada
 interface Crop {
     crop: string;
     year: string;
 }
 
+// Interface para representar uma propriedade 
 interface Property {
     farmName: string;
     city: string;
@@ -90,21 +98,25 @@ interface Property {
     crops: Crop[];
 }
 
+// Interface para representar um produtor 
 interface Producer {
     cpf: string;
     name: string;
     properties: Property[];
 }
 
+// Componente para edição de produtores
 const ProducerEdit = () => {
-    const { cpf } = useParams<{ cpf: string }>();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { cpf } = useParams<{ cpf: string }>(); // Obtém o CPF dos parâmetros da URL
+    const dispatch = useDispatch(); // Hook para disparar ações do Redux
+    const navigate = useNavigate(); // Hook para navegação no React Router
 
+    // Busca os dados do produtor no estado global
     const producerFromState = useSelector((state: RootState) =>
         state.producers.producers.find((p) => p.cpf === cpf)
     );
 
+    // Estado local para armazenar os dados do produtor
     const [producer, setProducer] = useState<Producer>({
         cpf: '',
         name: '',
@@ -120,6 +132,7 @@ const ProducerEdit = () => {
         }]
     });
 
+    // Função para adicionar uma nova propriedade na lista
     const addProperty = () => {
         setProducer({
             ...producer,
@@ -130,6 +143,7 @@ const ProducerEdit = () => {
         });
     };
 
+    // Função para remover uma propriedade da lista
     const removeProperty = (index: number) => {
         setProducer({
             ...producer,
@@ -137,6 +151,7 @@ const ProducerEdit = () => {
         });
     };
 
+    // Manipula mudanças nos campos das propriedades
     const handlePropertyChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const updatedProperties = [...producer.properties];
         updatedProperties[index] = {
@@ -149,6 +164,7 @@ const ProducerEdit = () => {
         });
     };
 
+    // Manipula mudanças no campo de safras
     const handleHarvestsChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const updatedProperties = [...producer.properties];
         updatedProperties[index].harvests = e.target.value.split(',').map((val) => val.trim());
@@ -158,6 +174,7 @@ const ProducerEdit = () => {
         });
     };
 
+    // Manipula mudanças no campo de culturas
     const handleCropsChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const updatedProperties = [...producer.properties];
         updatedProperties[index].crops = e.target.value.split(',').map((val) => {
@@ -170,6 +187,7 @@ const ProducerEdit = () => {
         });
     };
 
+    // Atualiza o estado local quando o produtor é encontrado no estado global
     useEffect(() => {
         if (producerFromState) {
             setProducer({
@@ -184,9 +202,11 @@ const ProducerEdit = () => {
         }
     }, [producerFromState]);
 
+    // Manipula o envio do formulário
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Atualiza os dados das propriedades
         const updatedProperties = producer.properties.map((property: Property) => ({
             ...property,
             harvests: property.harvests.map((item) => item.trim()),
@@ -197,16 +217,19 @@ const ProducerEdit = () => {
             })
         }));
 
+        // Cria um objeto atualizado do produtor
         const updatedProducer: Producer = {
             cpf: producer.cpf,
             name: producer.name,
             properties: updatedProperties,
         };
 
+        // Dispara a ação para editar o produtor no estado global
         dispatch(editProducer(updatedProducer));
-        navigate('/');
+        navigate('/'); // Redireciona para a página inicial
     };
 
+    // Retorna mensagem de erro se o produtor não for encontrado
     if (!producerFromState) {
         return <p>Produtor não encontrado!</p>;
     }
@@ -214,6 +237,7 @@ const ProducerEdit = () => {
         <AppContainer>
             <form onSubmit={handleSubmit}>
                 <FormWrapper>
+                    {/* Primeira coluna do formulário */}
                     <FormColumn>
                         <InputField>
                             <label>Nome da Fazenda:</label>
@@ -252,6 +276,8 @@ const ProducerEdit = () => {
                             />
                         </InputField>
                     </FormColumn>
+
+                    {/* Segunda coluna do formulário */}
                     <FormColumn>
                         <InputField>
                             <label>Área Agricultável:</label>
@@ -292,6 +318,7 @@ const ProducerEdit = () => {
                     </FormColumn>
                 </FormWrapper>
 
+                {/* Botão para salvar edição */}
                 <ButtonWrapper>
                     <button type="submit">Salvar</button>
                 </ButtonWrapper>
